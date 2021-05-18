@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/core/Alert";
+import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import LoadingButton from "@material-ui/lab/LoadingButton";
 
