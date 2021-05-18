@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     width: 800,
-    height: 600,
+    height: 620,
     backgroundColor: "white",
     display: "flex",
     flexDirection: "column",
@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
   progress: {
     color: "white",
   },
+  footer: {
+    color: "gray",
+    marginTop: theme.spacing(2)
+  }
 }));
 
 export default function Frontpage() {
@@ -172,7 +176,12 @@ export default function Frontpage() {
             ))}
           </List>
         </Paper>
+        <Box className={classes.footer}>
+          By Julian Zatloukal for Akimad.
+        </Box>
       </Box>
+
+      
     </Box>
   );
 }
