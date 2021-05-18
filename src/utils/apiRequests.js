@@ -1,8 +1,8 @@
 const ghApiUrl = "https://api.github.com";
 
-export const queryUsername = async (username) => {
+export const queryUsername = async (username, page) => {
   try {
-    let response = await fetch(`${ghApiUrl}/search/users?q=${username}`,{
+    let response = await fetch(`${ghApiUrl}/search/users?q=${username}&page=${page}`,{
       headers: {
         Authorization: `Basic ${btoa(process.env.GH_USER + ":" + process.env.GH_TOKEN )}`
       }
@@ -10,7 +10,7 @@ export const queryUsername = async (username) => {
 
     if (response.ok) {
       let formattedResponse = await response.json();
-      return formattedResponse.items;
+      return formattedResponse;
     } else {
       throw Error("GitHub API failed request");
     }
