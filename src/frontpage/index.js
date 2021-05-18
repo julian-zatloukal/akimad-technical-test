@@ -6,9 +6,11 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LoadingButton from "@material-ui/lab/LoadingButton";
 
 import { queryUsername } from "../utils/apiRequests";
-import UserItem from "./UserItem"
+import UserItem from "./UserItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,16 +43,20 @@ const useStyles = makeStyles((theme) => ({
   searchButton: {
     height: "2.25rem",
     width: "7rem",
+    // backgroundColor: "#556cd6 !important",
   },
   resultsContainer: {
     width: "100%",
     height: "100%",
     marginTop: "1rem",
-    overflowY: "auto"
+    overflowY: "auto",
   },
   resultList: {
     paddingRight: theme.spacing(3),
     height: "95%",
+  },
+  progress: {
+    color: "white",
   },
 }));
 
@@ -58,11 +64,13 @@ export default function Frontpage() {
   const classes = useStyles();
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSearch = () => {
+    setIsLoading(true);
     queryUsername(searchQuery).then((users) => {
-      console.log(users)
-      setUsers(users)
+      setUsers(users);
+      setIsLoading(false);
     });
   };
 
@@ -76,14 +84,15 @@ export default function Frontpage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button
+          <LoadingButton
             className={classes.searchButton}
             variant="contained"
             color="primary"
             onClick={onSearch}
+            loading={isLoading}
           >
             Search
-          </Button>
+          </LoadingButton>
         </Box>
 
         <Paper className={classes.resultsContainer} variant="outlined">
