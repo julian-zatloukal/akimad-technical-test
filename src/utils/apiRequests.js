@@ -2,11 +2,7 @@ const ghApiUrl = "https://api.github.com";
 
 export const queryUsername = async (username, page) => {
   try {
-    let response = await fetch(`${ghApiUrl}/search/users?q=${username}&page=${page}`,{
-      headers: {
-        Authorization: `Basic ${btoa(process.env.GH_USER + ":" + process.env.GH_TOKEN )}`
-      }
-    });
+    let response = await fetch(`${ghApiUrl}/search/users?q=${username}&page=${page}`);
 
     if (response.ok) {
       let formattedResponse = await response.json();
@@ -21,23 +17,11 @@ export const queryUsername = async (username, page) => {
 
 export const getUserDetails = async (username) => {
   try {
-    let details = await fetch(`${ghApiUrl}/users/${username}`, {
-      headers: {
-        Authorization: `Basic ${btoa(process.env.GH_USER + ":" + process.env.GH_TOKEN )}`
-      }
-    });
+    let details = await fetch(`${ghApiUrl}/users/${username}`);
 
-    let orgs = await fetch(`${ghApiUrl}/users/${username}/orgs`, {
-      headers: {
-        Authorization: `Basic ${btoa(process.env.GH_USER + ":" + process.env.GH_TOKEN )}`
-      }
-    });
+    let orgs = await fetch(`${ghApiUrl}/users/${username}/orgs`);
 
-    let repos = await fetch(`${ghApiUrl}/users/${username}/repos`, {
-      headers: {
-        Authorization: `Basic ${btoa(process.env.GH_USER + ":" + process.env.GH_TOKEN )}`
-      }
-    });
+    let repos = await fetch(`${ghApiUrl}/users/${username}/repos`);
 
     if (orgs.ok && repos.ok && details.ok) {
       let formattedDetails = await details.json();
