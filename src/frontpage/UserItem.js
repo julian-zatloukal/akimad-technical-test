@@ -23,16 +23,12 @@ import { useQuery } from "react-query";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
-
-
-
 import { getUserDetails } from "../utils/apiRequests";
 dayjs.extend(localizedFormat);
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  infoList: {
-  },
+  infoList: {},
   itemIcon: {
     justifyContent: "center",
   },
@@ -86,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
   repoCointainer: {
     marginTop: "1rem",
   },
-  progress:{
-    marginRight: theme.spacing(2)
-  }
+  progress: {
+    marginRight: theme.spacing(2),
+  },
 }));
 
 export default function UserItem({ userData }) {
@@ -103,7 +99,10 @@ export default function UserItem({ userData }) {
       staleTime: 0,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      retry: false
+      retry: false,
+      onError: (ex) => {
+        console.log(ex);
+      },
     }
   );
 
@@ -132,7 +131,9 @@ export default function UserItem({ userData }) {
             </Box>
           </Tooltip>
         )}
-        {isLoading && <CircularProgress className={classes.progress}  size={20} />}
+        {isLoading && (
+          <CircularProgress className={classes.progress} size={20} />
+        )}
 
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>

@@ -7,8 +7,6 @@ export const queryUsername = async (username, page) => {
     if (response.ok) {
       let formattedResponse = await response.json();
       return formattedResponse;
-    } else {
-      throw Error("GitHub API failed request");
     }
   } catch (ex) {
     throw Error("GitHub API connection error");
@@ -32,8 +30,6 @@ export const getUserDetails = async (username) => {
         orgs: formattedOrgs,
         repos: formattedRepos
       };
-    } else {
-      throw Error("GitHub API failed request");
     }
   } catch (ex) {
     throw Error("GitHub API connection error");
