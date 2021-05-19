@@ -91,7 +91,7 @@ export default function UserItem({ userData }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const { isLoading, error, data, isSuccess } = useQuery(
+  const { isLoading, data, isSuccess } = useQuery(
     ["user-detailed", userData.id],
     () => getUserDetails(userData.login),
     {

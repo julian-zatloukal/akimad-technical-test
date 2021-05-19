@@ -2,13 +2,11 @@ import React, { useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import LoadingButton from "@material-ui/lab/LoadingButton";
 
 import { queryUsername } from "../utils/apiRequests";
@@ -40,12 +38,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     gap: "1rem",
-    alignItems: "flex-end",
+    alignItems: "center",
   },
   searchButton: {
     height: "2.25rem",
-    width: "7rem",
-    // backgroundColor: "#556cd6 !important",
+    width: "9rem",
   },
   resultsContainer: {
     width: "100%",
@@ -54,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
   },
   resultList: {
-    paddingRight: theme.spacing(3),
+    padding: "24px !important",
     height: "95%",
   },
   progress: {
@@ -62,7 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
   footer: {
     color: "gray",
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(3),
+    fontSize: "0.9rem",
+    "& span": {
+      fontWeight: 500
+    }
   }
 }));
 
@@ -112,9 +113,14 @@ export default function Frontpage() {
     if (lastUserCount/30 > (page + 1))  {
       setIsLoading(true);
       queryUsername(searchQuery, page + 1).then(({items}) => {
-        setUsers((prev) => [...prev, ...users]);
+        setUsers((prev) => [...prev, ...items]);
         setIsLoading(false);
         setPage((prev) => prev + 1);
+      }).catch((ex) => {
+        setAlertMessage(ex.message)
+        setAlertOpen(true)
+        setIsLoading(false);
+
       });
     }
   
@@ -141,6 +147,7 @@ export default function Frontpage() {
       <Box className={classes.container}>
         <Box className={classes.controls}>
           <TextField
+          size="small"
             className={classes.usernameTextfield}
             label="Github username"
             value={searchQuery}
@@ -165,7 +172,7 @@ export default function Frontpage() {
           className={classes.resultsContainer}
           variant="outlined"
           onScroll={onListScroll}
-          innerRef={listContainer}
+          ref={listContainer}
         >
           <List dense={false} className={classes.resultList}>
             {users.map((user) => (
@@ -177,7 +184,7 @@ export default function Frontpage() {
           </List>
         </Paper>
         <Box className={classes.footer}>
-          By Julian Zatloukal for Akimad.
+          By <span>Julian Zatloukal</span> for <span>Akimad</span>.
         </Box>
       </Box>
 

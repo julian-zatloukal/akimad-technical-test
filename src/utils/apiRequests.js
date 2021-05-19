@@ -2,37 +2,50 @@ const ghApiUrl = "https://api.github.com";
 
 export const queryUsername = async (username, page) => {
   try {
-    let response = await fetch(`${ghApiUrl}/search/users?q=${username}&page=${page}`);
-
-    if (response.ok) {
-      let formattedResponse = await response.json();
-      return formattedResponse;
-    }
+    var response = await fetch(
+      `${ghApiUrl}/search/users?q=${username}&page=${page}`
+    );
   } catch (ex) {
     throw Error("GitHub API connection error");
+  }
+
+  if (response.ok) {
+    try {
+      var formattedResponse = await response.json();
+      return formattedResponse;
+    } catch (ex) {
+      throw Error("Unable to process server response");
+    }
+  } else {
+    throw Error("GitHub API limit reached");
   }
 };
 
 export const getUserDetails = async (username) => {
   try {
-    let details = await fetch(`${ghApiUrl}/users/${username}`);
+    var details = await fetch(`${ghApiUrl}/users/${username}`);
 
-    let orgs = await fetch(`${ghApiUrl}/users/${username}/orgs`);
+    var orgs = await fetch(`${ghApiUrl}/users/${username}/orgs`);
 
-    let repos = await fetch(`${ghApiUrl}/users/${username}/repos`);
+    var repos = await fetch(`${ghApiUrl}/users/${username}/repos`);
+  } catch (ex) {
+    throw Error("GitHub API connection error");
+  }
 
-    if (orgs.ok && repos.ok && details.ok) {
+  if (orgs.ok && repos.ok && details.ok) {
+    try {
       let formattedDetails = await details.json();
       let formattedOrgs = await orgs.json();
       let formattedRepos = await repos.json();
       return {
         detailed: formattedDetails,
         orgs: formattedOrgs,
-        repos: formattedRepos
+        repos: formattedRepos,
       };
+    } catch (ex) {
+      throw Error("Unable to process server response");
     }
-  } catch (ex) {
-    throw Error("GitHub API connection error");
+  } else {
+    throw Error("GitHub API limit reached");
   }
 };
-
