@@ -22,7 +22,7 @@ import BusinessIcon from "@material-ui/icons/Business";
 import { useQuery } from "react-query";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import {grey} from "@material-ui/core/colors"
+import { grey } from "@material-ui/core/colors";
 
 import { getUserDetails } from "../utils/apiRequests";
 dayjs.extend(localizedFormat);
@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
   listsContainer: {
     display: "flex",
     flexDirection: "row",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
     width: "100%",
     gap: theme.spacing(2),
   },
