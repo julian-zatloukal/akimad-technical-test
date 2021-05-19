@@ -22,6 +22,7 @@ import BusinessIcon from "@material-ui/icons/Business";
 import { useQuery } from "react-query";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import {grey} from "@material-ui/core/colors"
 
 import { getUserDetails } from "../utils/apiRequests";
 dayjs.extend(localizedFormat);
@@ -65,12 +66,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   repoTitle: {
+    color: grey[600],
     paddingLeft: theme.spacing(4),
     fontWeight: "bold",
-    paddingBottom: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.25),
   },
   orgsContainer: {
-    // width: "50%"
     display: "flex",
     flexDirection: "column",
     flexBasis: "100%",
