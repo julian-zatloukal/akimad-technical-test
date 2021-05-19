@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
   },
   resultList: {
-    padding: "24px !important",
+    padding: "0 24px 0 24px !important",
     height: "95%",
   },
   progress: {
